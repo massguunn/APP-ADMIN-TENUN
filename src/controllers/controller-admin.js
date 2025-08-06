@@ -95,13 +95,11 @@ module.exports = {
           .status(500)
           .json({ status: "error", message: "Gagal menambahkan data" });
       }
-      res.redirect("/admin");
+      res.redirect("/admin?success=1");
     });
   },
 
   updateData(req, res) {
-    console.log("req.file:", req.file);
-    console.log("req.body:", req.body);
     const id = req.params.id;
     const {
       nama_gb,
@@ -127,7 +125,6 @@ module.exports = {
     let values = [];
 
     if (req.file) {
-      // Ada file baru, update semua termasuk gambar
       const gambar = "/uploads/" + req.file.filename;
       sql = `
       UPDATE data_GB SET nama_gb=?, alamat_gb=?, nomer_hp=?, harga=?, deskripsi=?, gambar=?, latitude=?, longitude=?, map=?, jm_gendang=?, jm_suling=?, jm_cemprang=?, jm_reong=?, jm_gong=?, jm_petuq=?, jm_rencek=?, link_fb=?, link_ig=?
@@ -155,7 +152,6 @@ module.exports = {
         id,
       ];
     } else {
-      // Tidak ada file baru, jangan update kolom gambar
       sql = `
       UPDATE data_GB SET nama_gb=?, alamat_gb=?, nomer_hp=?, harga=?, deskripsi=?, latitude=?, longitude=?, map=?, jm_gendang=?, jm_suling=?, jm_cemprang=?, jm_reong=?, jm_gong=?, jm_petuq=?, jm_rencek=?, link_fb=?, link_ig=?
       WHERE id=?
@@ -185,16 +181,14 @@ module.exports = {
     pool.query(sql, values, (err, result) => {
       if (err) {
         console.error("Update error:", err);
-        return res
-          .status(500)
-          .json({ status: "error", message: "Gagal mengupdate data" });
+        return res.json({ status: "error", message: "Gagal mengupdate data." });
       }
+
       if (result.affectedRows === 0) {
-        return res
-          .status(404)
-          .json({ status: "fail", message: "Data tidak ditemukan" });
+        return res.json({ status: "error", message: "Data tidak ditemukan." });
       }
-      res.json({ status: "success", message: "Data berhasil diupdate" });
+
+      res.json({ status: "success", message: "Data berhasil diupdate." });
     });
   },
 

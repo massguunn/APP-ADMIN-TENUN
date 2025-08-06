@@ -96,7 +96,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6 mb-3">
+          <div class="col-12 col-sm-6 mb-3">
             <label for="latitude" class="form-label">Latitude</label>
             <input
               type="text"
@@ -221,78 +221,80 @@
 
     <div class="container my-4">
       <h2 class="text-center mb-3 mt-5">Data Gendang Beleq</h2>
-      <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-          <tr>
-            <!-- <th>ID</th> -->
-            <th>Nama</th>
-            <th>Alamat</th>
-            <th>No. HP</th>
-            <th>Harga</th>
-            <th>Deskripsi</th>
-            <th>Gendang</th>
-            <th>Suling</th>
-            <th>Cemprang</th>
-            <th>Reong</th>
-            <th>Gong</th>
-            <th>Petuq</th>
-            <th>Rencek</th>
-            <th>Gambar</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Link Map</th>
-            <th>Link fb</th>
-            <th>link ig</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if (data && data.length > 0) { %> <% data.forEach(item => { %>
-          <tr>
-            <td><%= item.nama_gb %></td>
-            <td><%= item.alamat_gb %></td>
-            <td><%= item.nomer_hp %></td>
-            <td>Rp.<%= item.harga %></td>
-            <td><%= item.deskripsi %></td>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <!-- <th>ID</th> -->
+              <th>Nama</th>
+              <th>Alamat</th>
+              <th>No. HP</th>
+              <th>Harga</th>
+              <th>Deskripsi</th>
+              <th>Gendang</th>
+              <th>Suling</th>
+              <th>Cemprang</th>
+              <th>Reong</th>
+              <th>Gong</th>
+              <th>Petuq</th>
+              <th>Rencek</th>
+              <th>Gambar</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Link Map</th>
+              <th>Link fb</th>
+              <th>link ig</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (data && data.length > 0) { %> <% data.forEach(item => { %>
+            <tr>
+              <td><%= item.nama_gb %></td>
+              <td><%= item.alamat_gb %></td>
+              <td><%= item.nomer_hp %></td>
+              <td>Rp.<%= item.harga %></td>
+              <td><%= item.deskripsi %></td>
 
-            <td><%= item.jm_gendang %></td>
-            <td><%= item.jm_suling %></td>
-            <td><%= item.jm_cemprang %></td>
-            <td><%= item.jm_reong %></td>
-            <td><%= item.jm_gong %></td>
-            <td><%= item.jm_petuq %></td>
-            <td><%= item.jm_rencek %></td>
+              <td><%= item.jm_gendang %></td>
+              <td><%= item.jm_suling %></td>
+              <td><%= item.jm_cemprang %></td>
+              <td><%= item.jm_reong %></td>
+              <td><%= item.jm_gong %></td>
+              <td><%= item.jm_petuq %></td>
+              <td><%= item.jm_rencek %></td>
 
-            <td>
-              <img src="<%= item.gambar %>" alt="gambar" width="80" />
-            </td>
-            <td><%= item.latitude %></td>
-            <td><%= item.longitude %></td>
-            <td><a href="<%= item.map %>" target="_blank">Link Map</a></td>
-            <td><%= item.link_fb %></td>
-            <td><%= item.link_ig %></td>
-            <td>
-              <button
-                class="btn btn-warning btn-sm"
-                onclick="updateData('<%= item.id %>')"
-              >
-                Edit
-              </button>
-              <button
-                class="btn btn-danger btn-sm"
-                onclick="deleteData('<%= item.id %>')"
-              >
-                Hapus
-              </button>
-            </td>
-          </tr>
-          <% }) %> <% } else { %>
-          <tr>
-            <td colspan="17" class="text-center">Data kosong</td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
+              <td>
+                <img src="<%= item.gambar %>" alt="gambar" width="80" />
+              </td>
+              <td><%= item.latitude %></td>
+              <td><%= item.longitude %></td>
+              <td><a href="<%= item.map %>" target="_blank">Link Map</a></td>
+              <td><%= item.link_fb %></td>
+              <td><%= item.link_ig %></td>
+              <td class="d-flex flex-column flex-md-row gap-2">
+                <button
+                  class="btn btn-warning btn-sm"
+                  onclick="updateData('<%= item.id %>')"
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn btn-danger btn-sm"
+                  onclick="deleteData('<%= item.id %>')"
+                >
+                  Hapus
+                </button>
+              </td>
+            </tr>
+            <% }) %> <% } else { %>
+            <tr>
+              <td colspan="17" class="text-center">Data kosong</td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Modal Edit Data -->
@@ -304,9 +306,7 @@
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg">
-        <form id="editForm" method="POST" enctype="multipart/form-data">
-          <!-- 👇 Disini input _method untuk spoof jadi PUT -->
-          <input type="hidden" name="_method" value="PUT" />
+        <form id="editForm" enctype="multipart/form-data">
           <input type="hidden" id="edit-id" name="id" />
           <div class="modal-content">
             <div class="modal-header">
@@ -541,5 +541,17 @@
       window.data = <%- JSON.stringify(data) %>;
     </script>
     <script src="/js/script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("success") === "1") {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil!",
+          text: "Data berhasil ditambahkan.",
+        });
+      }
+    </script>
   </body>
 </html>

@@ -31,8 +31,10 @@
           class="navbar-brand fw-bold fs-4 d-flex align-items-center"
           href="<%= url %>"
         >
-          <i class="fas fa-drum me-2"></i> Gendang Lombok Partner
+          <i class="fas fa-drum me-2"></i>
+          <span>Gendang Lombok Partner</span>
         </a>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -67,13 +69,9 @@
             <li class="nav-item">
               <a class="nav-link" href="<%= url %>alatMusik">Alat-Musik</a>
             </li>
-            <li class="nav-item ms-3">
-              <a class="nav-link" href="<%= url %>login/logout" title="Logout">
-                <i
-                  class="fa-solid fa-arrow-right-from-bracket text-warning"
-                ></i>
-              </a>
-            </li>
+            <a href="<%= url %>login/logout" class="logout-btn" title="Logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
           </ul>
         </div>
       </div>
@@ -87,7 +85,8 @@
 
       <div class="row justify-content-center g-4">
         <div class="col-md-4 col-sm-6">
-          <div class="card shadow-sm border-0 rounded-4">
+          <!-- Tambahkan class glow-card di sini -->
+          <div class="card glow-card shadow-sm border-0 rounded-4">
             <div class="card-body text-center py-4">
               <div class="mb-3">
                 <i class="fas fa-drum fa-3x text-primary"></i>

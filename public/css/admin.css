@@ -92,26 +92,94 @@ table tbody img {
 table tbody img:hover {
   transform: scale(1.05);
 }
+a.btn-secondary {
+  position: relative;
+  display: inline-block;
+  background-color: rgb(126, 125, 129);
+  border: 2px solid rgb(126, 125, 129);
+  color: #fff;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  z-index: 1;
+}
 
-/* Action buttons */
+a.btn-secondary::before {
+  content: "";
+  position: absolute;
+  right: -100%; /* animasi mulai dari kanan */
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, #574b90, #8e44ad);
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+
+a.btn-secondary:hover::before {
+  right: 0;
+}
+
+a.btn-secondary:hover {
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(87, 75, 144, 0.4);
+}
+
 .btn-warning {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
   color: #fff;
   background-color: #ffc107;
   border-color: #ffc107;
-  transition: background-color 0.3s ease;
+  transition: color 0.4s ease;
 }
+
+.btn-warning::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* arah kanan ➜ kiri */
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, #f9d423, #ff4e50);
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+
 .btn-warning:hover {
-  background-color: #e0a800;
-  border-color: #d39e00;
-  color: #212529;
+  color: rgb(0, 0, 0);
+}
+
+.btn-warning:hover::before {
+  right: 0;
 }
 
 .btn-danger {
-  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.4s ease;
 }
+
+.btn-danger::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, #ff4e50, #f9d423);
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+
 .btn-danger:hover {
-  background-color: #a71d2a;
-  border-color: #a71d2a;
+  color: rgb(0, 0, 0);
+}
+
+.btn-danger:hover::before {
+  left: 0;
 }
 
 /* Modal Styling */

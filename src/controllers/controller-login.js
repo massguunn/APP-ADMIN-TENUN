@@ -115,7 +115,7 @@ module.exports = {
     });
   },
 
-  // GET /logout
+  //GET /logout
   logout(req, res) {
     console.log("🔚 User logout dipanggil");
     req.session.destroy((err) => {
@@ -129,3 +129,15 @@ module.exports = {
     });
   },
 };
+
+//   logout(req, res) {
+//     req.session.destroy((err) => {
+//       if (err) {
+//         console.error(err);
+//         return;
+//       }
+//       res.clearCookie("secretname");
+//       res.redirect("/login");
+//     });
+//   },
+// };
