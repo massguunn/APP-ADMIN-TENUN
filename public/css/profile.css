@@ -1,0 +1,85 @@
+body {
+  transition: background-color 0.9s, color 0.9s;
+}
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.navbar-dark-mode {
+  background-color: #1e1e1e !important;
+  transition: background-color 0.9s;
+}
+
+.card.dark-mode {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  transition: background-color 0.9s, color 0.9s;
+}
+
+a.text-decoration-none {
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+a.text-decoration-none:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+body.dark-mode a.text-decoration-none {
+  color: #81a1c1;
+}
+
+body.dark-mode a.text-decoration-none:hover {
+  color: #a3c1e1;
+}
+
+/* Profile Image */
+.profile-img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border: 5px solid #007bff;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.5);
+  border-radius: 50%;
+  margin: 0 auto 20px auto; /* center horizontally with auto margin */
+  display: block;
+}
+
+/* Kontak link style */
+.contact-links a {
+  font-size: 1.1rem;
+  margin-right: 20px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contact-links a:hover {
+  background-color: #007bff;
+  color: white !important;
+  text-decoration: none;
+}
+
+body.dark-mode .contact-links a:hover {
+  background-color: #4a90e2;
+  color: white !important;
+}
+
+/* Universitas style normal */
+.univ-text {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Universitas style dark mode */
+body.dark-mode .univ-text {
+  color: #d2e1ef; /* lebih cerah dan kontras */
+}
+
+.card p {
+  font-size: 1rem;
+  line-height: 1.5;
+}

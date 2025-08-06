@@ -1,0 +1,23 @@
+body {
+  padding-top: 2rem;
+  background-color: darkgray;
+}
+
+#map {
+  height: 75vh;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+}
+
+.popup-card-img {
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.btn-back {
+  margin-bottom: 1rem;
+}

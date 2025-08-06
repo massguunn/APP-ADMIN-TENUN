@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alat Musik</title>
+    <!-- link bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- link font-awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- link css -->
+    <link rel="stylesheet" href="/css/alat-musik.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <a href="/" class="btn btn-secondary mb-3">
+        <i class="fa fa-arrow-left"></i> Kembali ke Dashboard
+      </a>
+
+      <h2 class="mb-4 text-center">Tambah Alat</h2>
+      <form
+        class="contener"
+        action="/alatMusik"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <label for="nama" class="form-label">Nama</label>
+          <input name="nama" id="nama" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="deskripsi" class="form-label">Deskripsi</label>
+          <input
+            name="deskripsi"
+            id="deskripsi"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="gambar" class="form-label">Unggah Gambar</label>
+          <input
+            name="gambar"
+            id="gambar"
+            type="file"
+            accept="image/*"
+            class="form-control"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="suara" class="form-label">Unggah Suara</label>
+          <input
+            name="suara"
+            id="suara"
+            type="file"
+            accept=".mp3,.wav,.ogg,.mpeg,.m4a"
+            class="form-control"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="video" class="form-label">Unggah Video</label>
+          <input
+            name="video"
+            id="video"
+            type="file"
+            accept="video/*"
+            class="form-control"
+          />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Tambah</button>
+      </form>
+
+      <!-- <h2 class="mb-4 text-center">Daftar Alat Musik</h2> -->
+
+      <div class="container my-4">
+        <h2 class="text-center mb-3 mt-5">Daftar Alat Musik</h2>
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>Gambar</th>
+              <th>Suara</th>
+              <th>vidio</th>
+              <th>Nama</th>
+              <th>Deskripsi</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.forEach(function(item){ %>
+            <tr>
+              <td>
+                <img
+                  src="<%= item.gambar %>"
+                  alt=""
+                  style="width: 100px; height: auto"
+                />
+              </td>
+              <td><audio src="<%= item.suara %>" controls></audio></td>
+              <td>
+                <video
+                  src="<%= item.video %>"
+                  style="width: 200px; height: auto"
+                  controls
+                ></video>
+              </td>
+              <td><%= item.nama %></td>
+              <td><%= item.deskripsi %></td>
+              <td>
+                <!-- Tombol Edit -->
+                <button
+                  class="btn btn-warning btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#edit<%= item.id %>"
+                >
+                  Edit
+                </button>
+
+                <form
+                  action="/alatMusik/<%= item.id %>?_method=DELETE"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button
+                    class="btn btn-danger btn-sm"
+                    type="submit"
+                    onclick="return confirm('Hapus data ini?')"
+                  >
+                    Hapus
+                  </button>
+                </form>
+              </td>
+            </tr>
+
+            <!-- Modal Edit -->
+            <div
+              class="modal fade"
+              id="edit<%= item.id %>"
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content p-4">
+                  <h5>Edit Alat</h5>
+                  <form
+                    class="contener"
+                    action="/alatMusik/<%= item.id %>?_method=PUT"
+                    method="POST"
+                    enctype="multipart/form-data"
+                  >
+                    <!-- Simpan path yang lama -->
+                    <input
+                      type="hidden"
+                      name="gambar_lama"
+                      value="<%= item.gambar %>"
+                    />
+                    <input
+                      type="hidden"
+                      name="video_lama"
+                      value="<%= item.video %>"
+                    />
+                    <input
+                      type="hidden"
+                      name="suara_lama"
+                      value="<%= item.suara %>"
+                    />
+
+                    <div class="mb-3">
+                      <label for="nama" class="form-label">Nama</label>
+                      <input
+                        name="nama"
+                        id="nama"
+                        class="form-control"
+                        value="<%= item.nama %>"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="deskripsi" class="form-label"
+                        >Deskripsi</label
+                      >
+                      <input
+                        name="deskripsi"
+                        id="deskripsi"
+                        class="form-control"
+                        value="<%= item.deskripsi %>"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="gambar" class="form-label"
+                        >Ganti Gambar (optional)</label
+                      >
+                      <input
+                        name="gambar"
+                        id="gambar"
+                        type="file"
+                        accept="image/*"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="suara" class="form-label"
+                        >Ganti Suara (optional)</label
+                      >
+                      <input
+                        name="suara"
+                        id="suara"
+                        type="file"
+                        accept=".mp3,.wav,.ogg,.mpeg,.m4a"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="video" class="form-label"
+                        >Ganti Video (optional)</label
+                      >
+                      <input
+                        name="video"
+                        id="video"
+                        type="file"
+                        accept="video/*"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">
+                      Simpan Perubahan
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <% if (typeof swalMessage !== "undefined" && swalMessage.length > 0 &&
+    typeof swalIcon !== "undefined" && swalIcon.length > 0) { %>
+    <script>
+      Swal.fire({
+        icon: "<%= swalIcon[0] %>", // success | info | warning | error
+        title:
+          "<%= swalIcon[0] === 'success' ? 'Berhasil!' : swalIcon[0] === 'error' ? 'Gagal!' : 'Info' %>",
+        text: "<%= swalMessage[0] %>",
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true,
+        position: "top-end",
+      });
+    </script>
+    <% } %>
+  </body>
+</html>
