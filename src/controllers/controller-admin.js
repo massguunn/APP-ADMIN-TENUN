@@ -8,7 +8,6 @@ module.exports = {
   showDashboard(req, res) {
     console.log("showDashboard jalan");
     res.render("admin", {
-      // url: "http://localhost:3000/", local
       url: req.protocol + "://" + req.get("host") + "/",
     });
   },
