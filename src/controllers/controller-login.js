@@ -22,9 +22,32 @@ module.exports = {
 
     const fullUrl = req.protocol + "://" + req.get("host") + "/";
     console.log("📥 Akses halaman login, full URL:", fullUrl);
+    // ✅ Ambil dulu semua flash ke variabel
+    const colorFlash = req.flash("color");
+    const statusFlash = req.flash("status");
+    const pesanFlash = req.flash("message");
 
+    // // Tangkap dari query logout
+    // const isLogout = req.query.logout === "1";
+
+    // // Kalau logout, pakai pesan custom
+    // if (isLogout) {
+    //   colorFlash.push("info");
+    //   statusFlash.push("Logout");
+    //   pesanFlash.push("Kamu berhasil logout dari sistem.");
+    // }
+
+    // ✅ Cetak setelah variabelnya tersedia
+    console.log("Flash color:", colorFlash);
+    console.log("Flash status:", statusFlash);
+    console.log("Flash message:", pesanFlash);
+
+    // ✅ Kirim ke view
     res.render("login", {
       url: fullUrl,
+      colorFlash: colorFlash.length > 0 ? colorFlash[0] : null,
+      statusFlash: statusFlash.length > 0 ? statusFlash[0] : null,
+      pesanFlash: pesanFlash.length > 0 ? pesanFlash[0] : null,
     });
   },
 
@@ -76,7 +99,7 @@ module.exports = {
         console.log("✅ Email ditemukan, verifikasi password...");
 
         const sqlCheckPassword = `
-          SELECT * FROM table_admin 
+          SELECT * FROM table_admin
           WHERE email = ? AND password = SHA2(?, 512)
         `;
         connection.query(
@@ -115,17 +138,19 @@ module.exports = {
     });
   },
 
-  //GET /logout
   logout(req, res) {
     console.log("🔚 User logout dipanggil");
+
     req.session.destroy((err) => {
       if (err) {
         console.error("❌ Error saat logout:", err.message);
-      } else {
-        console.log("✅ Logout sukses, session dihapus");
+        return res.redirect("/login");
       }
-      res.clearCookie("secretname");
-      res.redirect("/login");
+
+      console.log("✅ Logout sukses, session dihapus");
+
+      // Redirect dengan query parameter
+      res.redirect("/login?logout=1");
     });
   },
 };

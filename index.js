@@ -21,8 +21,6 @@ const alatMusikRoutes = require("./src/routes/router-alatMusik");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(methodOverride("_method"));
-
 // Middleware untuk menyajikan file statis (tanpa prefix /public)
 app.use(express.static(path.join(__dirname, "public")));
 console.log("Serving static files from:", path.join(__dirname, "public"));
@@ -45,16 +43,6 @@ app.use(
 
 // index.js
 app.use(flash());
-app.use((req, res, next) => {
-  res.locals.colorFlash = req.flash("color");
-  res.locals.statusFlash = req.flash("status");
-  res.locals.pesanFlash = req.flash("message");
-  next();
-});
-
-// Setting folder views
-app.set("views", path.join(__dirname, "src/views"));
-app.set("view engine", "ejs");
 
 // Gunakan routes yang telah didefinisikan
 app.use("/login", loginRoutes);
@@ -67,7 +55,35 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  res.locals.url = req.protocol + "://" + req.get("host");
+  const color = req.flash("color");
+  const status = req.flash("status");
+  const message = req.flash("message");
+
+  // Hanya assign jika ada isinya
+  res.locals.colorFlash = color.length ? color[0] : null;
+  res.locals.statusFlash = status.length ? status[0] : null;
+  res.locals.pesanFlash = message.length ? message[0] : null;
+
+  // Tampilkan log hanya jika flash ada isinya
+  if (color.length || status.length || message.length) {
+    console.log("📥 Akses halaman:", req.originalUrl);
+    console.log("Flash color:", color);
+    console.log("Flash status:", status);
+    console.log("Flash message:", message);
+  }
+
+  next();
+});
+
+// Setting folder views
+app.set("views", path.join(__dirname, "src/views"));
+app.set("view engine", "ejs");
+
 // Jalankan server
 app.listen(3000, () => {
   console.log("Server Berjalan di Port : " + 3000);
 });
+
+// kode valid

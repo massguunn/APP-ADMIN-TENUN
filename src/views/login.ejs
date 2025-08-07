@@ -87,23 +87,66 @@
             <i class="fas fa-sign-in-alt me-2"></i> Login
           </button>
         </div>
+        <br />
 
-        <% if (colorFlash && statusFlash && pesanFlash) { %>
-        <div
-          class="alert alert-<%= colorFlash %> alert-dismissible fade show mt-3"
-          role="alert"
-        >
-          <strong><%= statusFlash %>!</strong> <%= pesanFlash %>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-        <% } %>
-      </form>
-    </main>
+<% if (colorFlash && statusFlash && pesanFlash) { %>
+  <div class="alert alert-<%= colorFlash %> alert-dismissible fade show" role="alert">
+    <strong><%= statusFlash %>:</strong> <%= pesanFlash %>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+<% } %>
+
+
+<!-- script untuk notifikasi logout -->
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('logout') === '1') {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: 'info',
+      title: 'Kamu berhasil logout',
+      showClass: {
+        popup: 'swal2-show swal2-animate__slideOutDown'
+      },
+      hideClass: {
+        popup: 'swal2-hide swal2-animate__slideInUp'
+      },
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      },
+      customClass: {
+        popup: 'small-toast'
+      }
+    });
+
+    // Hapus parameter logout agar tidak muncul saat reload
+    const newUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, newUrl);
+  }
+</script>
+
+<style>
+
+  .swal2-popup.small-toast {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    min-width: 260px;
+  }
+</style>
+
+
+
+
 
     <!-- Dark Mode Script -->
     <script>
