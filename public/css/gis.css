@@ -21,3 +21,36 @@ body {
 .btn-back {
   margin-bottom: 1rem;
 }
+
+a.btn-secondary {
+  position: relative;
+  display: inline-block;
+  background-color: rgb(126, 125, 129);
+  border: 2px solid rgb(126, 125, 129);
+  color: #fff;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+a.btn-secondary::before {
+  content: "";
+  position: absolute;
+  right: -100%; /* animasi mulai dari kanan */
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, #574b90, #8e44ad);
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+
+a.btn-secondary:hover::before {
+  right: 0;
+}
+
+a.btn-secondary:hover {
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(87, 75, 144, 0.4);
+}
