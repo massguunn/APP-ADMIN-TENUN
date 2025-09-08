@@ -22,9 +22,9 @@ dataGB.forEach((item, index) => {
     }">
     
         <div class="card-body">
-          <h5 class="card-title">${item.nama_gb}</h5>
+          <h5 class="card-title">${item.nama_toko}</h5>
            <p class="card-text"><small class="text-muted">Alamat: ${
-             item.alamat_gb
+             item.nama_pemilik
            }</small></p>
           <p id="desc-${index}" class="card-text">${deskripsiPendek}</p>
           ${
@@ -33,7 +33,7 @@ dataGB.forEach((item, index) => {
               : ""
           }
           <p class="card-text"><small class="text-muted">Harga: Rp${
-            item.harga
+            item.alamat
           }</small></p>
         </div>
       </div>

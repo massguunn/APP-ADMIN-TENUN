@@ -3,6 +3,10 @@ body {
   background-color: #f8f9fa;
 }
 
+bg-pink {
+  background-color: #ff0066;
+}
+
 /* Navbar Brand Style */
 .navbar-brand {
   color: #ffc107;

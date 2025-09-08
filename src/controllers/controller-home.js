@@ -6,21 +6,28 @@ pool.on("error", (err) => console.error(err));
 
 module.exports = {
   home(req, res) {
-    const sqlCount = "SELECT COUNT(*) AS totalGB FROM data_GB";
+    const sql = `
+    
+  SELECT 
+    (SELECT COUNT(*) FROM tabel_pengerajin) AS totalPengerajin,
+    (SELECT COUNT(*) FROM tabel_motif) AS totalMotif
 
-    pool.query(sqlCount, (err, results) => {
-      // <-- ganti db.query jadi pool.query
+    `;
+
+    pool.query(sql, (err, results) => {
       if (err) {
         console.error(err);
         return res.status(500).send("Database error");
       }
 
-      const totalGB = results[0].totalGB;
+      const totalPengerajin = results[0].totalPengerajin;
+      const totalMotif = results[0].totalMotif;
 
       res.render("home", {
         url: req.protocol + "://" + req.get("host") + "/",
         userName: req.session.username,
-        totalGB: totalGB,
+        totalPengerajin,
+        totalMotif,
       });
     });
   },

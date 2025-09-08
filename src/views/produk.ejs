@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Data Produk</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body class="container py-4">
+    <!-- Tombol Kembali -->
+    <a href="/" class="btn btn-secondary mb-4">
+      <i class="fa fa-arrow-left me-1"></i> Kembali ke Dashboard
+    </a>
+
+    <!-- ✅ Notifikasi -->
+    <% if (query.success) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle me-1"></i> Produk berhasil ditambahkan.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %> 
+
+    <% if (query.updated) { %>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="fa fa-edit me-1"></i> Produk berhasil diperbarui.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %> 
+
+    <% if (query.deleted) { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa fa-trash me-1"></i> Produk berhasil dihapus.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+
+    <!-- Form tambah produk -->
+    <h1 class="mb-4 text-center">Tambahkan Produk</h1>
+    <form
+      action="/produk/tambah"
+      method="POST"
+      enctype="multipart/form-data"
+      class="mb-4 card card-body shadow-sm"
+    >
+      <!-- Pilih Pengerajin -->
+      <div class="mb-3">
+        <label class="form-label">Pilih Pengerajin</label>
+        <select name="id_pengerajin" class="form-select" required>
+          <option value="">-- Pilih Pengerajin --</option>
+          <% if (pengerajin && pengerajin.length > 0) { %>
+            <% pengerajin.forEach(p => { %>
+              <option value="<%= p.id_pengerajin %>"><%= p.nama_toko %></option>
+            <% }) %>
+          <% } %>
+        </select>
+      </div>
+
+      <!-- Nama Produk -->
+      <div class="mb-3">
+        <input
+          type="text"
+          name="nama"
+          class="form-control"
+          placeholder="Nama Produk"
+          required
+        />
+      </div>
+
+      <!-- Harga -->
+      <div class="mb-3">
+        <input
+  type="text"
+  name="harga"
+  class="form-control"
+  placeholder="Harga"
+  required
+/>
+      </div>
+
+      <!-- Gambar -->
+      <div class="mb-3">
+        <input type="file" name="gambar" class="form-control" required />
+      </div>
+
+      <!-- Tombol -->
+      <div class="mb-3 text-center">
+        <button class="btn btn-primary w-50">
+          <i class="fa fa-plus-circle me-1"></i> Tambah Produk
+        </button>
+      </div>
+    </form>
+
+    <!-- Daftar Produk -->
+    <h1 class="mb-4 text-center">Daftar Produk</h1>
+    <table class="table table-bordered align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Nama Toko</th>
+          <th>Nama Pemilik</th>
+          <th>Nama Produk</th>
+          <th>Gambar</th>
+          <th>Harga</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (data && data.length > 0) { %>
+          <% data.forEach((item) => { %>
+            <tr>
+              <td><%= item.nama_toko %></td>
+              <td><%= item.nama_pemilik %></td>
+              <td><%= item.nama %></td>
+              <td>
+                <% if (item.gambar) { %>
+                  <img src="<%= item.gambar %>" alt="Gambar <%= item.nama %>" width="80" class="img-thumbnail" />
+                <% } else { %>
+                  <span class="text-muted fst-italic">Tidak ada gambar</span>
+                <% } %>
+              </td>
+              <td>Rp <%= item.harga %></td>
+              <td>
+                <!-- Tombol Edit -->
+                <button
+                  class="btn btn-sm btn-warning w-50 mb-1"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editModal<%= item.id_produk %>"
+                >
+                  <i class="fa fa-edit"></i> Edit
+                </button>
+
+                <!-- Modal Edit -->
+                <div
+                  class="modal fade"
+                  id="editModal<%= item.id_produk %>"
+                  tabindex="-1"
+                  aria-labelledby="editModalLabel<%= item.id_produk %>"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content shadow-sm border-0 rounded-3">
+                      <form
+                        action="/produk/update/<%= item.id_produk %>"
+                        method="POST"
+                        enctype="multipart/form-data"
+                      >
+                        <!-- Header -->
+                        <div class="modal-header bg-warning">
+                          <h5
+                            class="modal-title fw-bold"
+                            id="editModalLabel<%= item.id_produk %>"
+                          >
+                            ✏️ Edit Produk
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                          ></button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="modal-body">
+                          <!-- Pilih Pengerajin -->
+                          <div class="mb-3">
+                            <label class="form-label">Pengerajin</label>
+                            <select name="id_pengerajin" class="form-select" required>
+                              <% pengerajin.forEach(p => { %>
+                                <option value="<%= p.id_pengerajin %>" <%= p.id_pengerajin === item.id_pengerajin ? "selected" : "" %>>
+                                  <%= p.nama_toko %>
+                                </option>
+                              <% }) %>
+                            </select>
+                          </div>
+
+                          <!-- Nama Produk -->
+                          <div class="mb-3">
+                            <label class="form-label">Nama Produk</label>
+                            <input
+                              type="text"
+                              name="nama"
+                              value="<%= item.nama %>"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+
+                          <!-- Harga -->
+                          <div class="mb-3">
+                            <label class="form-label">Harga</label>
+                            <input
+                              type="text"
+                              name="harga"
+                              value="<%= item.harga %>"
+                              class="form-control"
+                              placeholder="Harga"
+                              required
+                            />
+                          </div>
+
+                          <!-- Gambar -->
+                          <div class="mb-3">
+                            <label class="form-label">Gambar (opsional)</label>
+                            <input type="file" name="gambar" class="form-control" />
+                            <% if (item.gambar) { %>
+                              <small class="d-block mt-1 text-muted">Gambar saat ini:</small>
+                              <img src="<%= item.gambar %>" alt="Gambar <%= item.nama %>" width="80" class="img-thumbnail mt-1" />
+                            <% } %>
+                          </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fa fa-times me-1"></i> Batal
+                          </button>
+                          <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-save me-1"></i> Simpan Perubahan
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tombol Hapus -->
+                <a
+                  href="/produk/hapus/<%= item.id_produk %>"
+                  class="btn btn-sm btn-danger w-50"
+                  onclick="return confirm('Yakin ingin hapus produk ini?')"
+                >
+                  <i class="fa fa-trash"></i> Hapus
+                </a>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="6" class="text-muted fst-italic">Belum ada produk</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Auto hide alert setelah 3 detik
+      setTimeout(() => {
+        const alertEl = document.querySelector(".alert");
+        if (alertEl) {
+          const bsAlert = new bootstrap.Alert(alertEl);
+          bsAlert.close();
+        }
+      }, 3000);
+    </script>
+  </body>
+</html>

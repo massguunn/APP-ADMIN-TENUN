@@ -15,8 +15,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
       rel="stylesheet"
     />
-
-    <!-- link css -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/home.css" />
     <!-- Google Font Amiri for Arabic -->
     <link
@@ -25,14 +24,14 @@
     />
   </head>
   <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
       <div class="container">
         <a
           class="navbar-brand fw-bold fs-4 d-flex align-items-center"
           href="<%= url %>"
         >
-          <i class="fas fa-drum me-2"></i>
-          <span>Gendang Lombok Partner</span>
+          Tenun Lombok Timur
         </a>
 
         <button
@@ -49,53 +48,67 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto align-items-center">
-            <li class="nav-item me-2">
-              <a
-                href="<%= url %>gis"
-                class="btn btn-primary btn-sm px-3 d-flex align-items-center"
-              >
-                <i class="fas fa-map-marked-alt me-1"></i> Lihat Peta
-              </a>
-            </li>
             <li class="nav-item">
               <a class="nav-link active" href="<%= url %>">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= url %>profile">Profile</a>
+              <a class="nav-link" href="<%= url %>pengerajin">Pengerajin</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= url %>admin">Admin</a>
+              <a class="nav-link" href="<%= url %>motif">Motif</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= url %>alatMusik">Alat-Musik</a>
+              <a class="nav-link" href="<%= url %>produk">Produk</a>
             </li>
-            <a href="<%= url %>login/logout" class="logout-btn" title="Logout">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            </a>
+            <li class="nav-item">
+              <a
+                href="<%= url %>login/logout"
+                class="nav-link text-warning"
+                title="Logout"
+              >
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
+    <!-- Main Content -->
     <main class="container mt-5 pt-5">
       <div class="text-center mb-5">
-        <h1 class="welcome-text display-5">السلام عليكم, <%= userName %>!</h1>
+        <h1 class="welcome-text display-5">WELCOME <%= userName %>!</h1>
         <p class="fs-5 text-secondary">Selamat datang di Dashboard Admin</p>
       </div>
 
       <div class="row justify-content-center g-4">
+        <!-- Card Jumlah Pengerajin -->
         <div class="col-md-4 col-sm-6">
-          <!-- Tambahkan class glow-card di sini -->
+          <div class="card glow-card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body text-center py-4">
+              <div class="mb-3"></div>
+              <h5 class="card-title fw-bold">Jumlah Pengerajin Tenun</h5>
+              <p class="card-text display-6 fw-semibold text-dark">
+                <%= totalPengerajin %>
+              </p>
+              <a
+                href="<%= url %>pengerajin"
+                class="btn btn-outline-primary mt-3"
+              >
+                Lihat Detail
+              </a>
+            </div>
+          </div>
+
+          <!-- Card Jumlah Motif -->
           <div class="card glow-card shadow-sm border-0 rounded-4">
             <div class="card-body text-center py-4">
-              <div class="mb-3">
-                <i class="fas fa-drum fa-3x text-primary"></i>
-              </div>
-              <h5 class="card-title fw-bold">Jumlah Gendang Beleq</h5>
+              <div class="mb-3"></div>
+              <h5 class="card-title fw-bold">Jumlah Motif Tenun</h5>
               <p class="card-text display-6 fw-semibold text-dark">
-                <%= totalGB %>
+                <%= totalMotif %>
               </p>
-              <a href="<%= url %>admin" class="btn btn-outline-primary mt-3">
+              <a href="<%= url %>motif" class="btn btn-outline-primary mt-3">
                 Lihat Detail
               </a>
             </div>
@@ -104,6 +117,7 @@
       </div>
     </main>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

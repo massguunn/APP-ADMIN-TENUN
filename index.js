@@ -14,8 +14,9 @@ app.use(methodOverride("_method"));
 const loginRoutes = require("./src/routes/router-login");
 const registerRoutes = require("./src/routes/router-register");
 const appRoutes = require("./src/routes/router-app");
-const adminRoutes = require("./src/routes/router-admin");
-const alatMusikRoutes = require("./src/routes/router-alatMusik");
+const produkRoutes = require("./src/routes/router-produk");
+const pengerajinRoutes = require("./src/routes/router-pengerajin");
+const motifRoutes = require("./src/routes/router-motif");
 
 // Configurasi dan gunakan library
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,8 +49,9 @@ app.use(flash());
 app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
 app.use("/", appRoutes);
-app.use("/", adminRoutes);
-app.use("/alatMusik", alatMusikRoutes);
+app.use("/produk", produkRoutes);
+app.use("/pengerajin", pengerajinRoutes);
+app.use("/motif", motifRoutes);
 app.use((req, res, next) => {
   res.locals.url = req.protocol + "://" + req.get("host");
   next();

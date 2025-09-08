@@ -27,16 +27,6 @@ module.exports = {
     const statusFlash = req.flash("status");
     const pesanFlash = req.flash("message");
 
-    // // Tangkap dari query logout
-    // const isLogout = req.query.logout === "1";
-
-    // // Kalau logout, pakai pesan custom
-    // if (isLogout) {
-    //   colorFlash.push("info");
-    //   statusFlash.push("Logout");
-    //   pesanFlash.push("Kamu berhasil logout dari sistem.");
-    // }
-
     // ✅ Cetak setelah variabelnya tersedia
     console.log("Flash color:", colorFlash);
     console.log("Flash status:", statusFlash);
@@ -154,15 +144,3 @@ module.exports = {
     });
   },
 };
-
-//   logout(req, res) {
-//     req.session.destroy((err) => {
-//       if (err) {
-//         console.error(err);
-//         return;
-//       }
-//       res.clearCookie("secretname");
-//       res.redirect("/login");
-//     });
-//   },
-// };
