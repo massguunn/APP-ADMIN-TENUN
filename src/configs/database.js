@@ -11,7 +11,7 @@
 module.exports = {
   multipleStatements: true,
   host: "localhost",
-  user: "db-tenun",
+  user: "DB-TENUN",
   password: "tB7nFhBBh2dKsrf5",
-  database: "DB-TENUN",
+  database: "db-tenun",
 };
