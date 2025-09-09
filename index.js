@@ -85,7 +85,7 @@ app.set("view engine", "ejs");
 
 // Jalankan server
 app.listen(3000, () => {
-  console.log("Server Berjalan di Port : " + 3000);
+  console.log("Server Berjalan di Port : " + 3030);
 });
 
 // kode valid
